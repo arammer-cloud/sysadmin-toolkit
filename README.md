@@ -1,26 +1,22 @@
 # SysAdmin Toolkit
 
-Colección de scripts de automatización para administración de sistemas Windows.
+Colección de scripts de automatización para administración de sistemas Windows y Linux.
 
-## Get-DiskReport
+## Scripts
 
-Analiza el uso de disco de todos los discos del sistema y exporta el resultado a CSV.
+### Get-DiskReport (PowerShell)
+Analiza el uso de disco de todos los discos Windows y exporta a CSV.
+**Uso:** `Get-DiskReport -Threshold 80`
 
-### Uso
+### health-check.sh (Bash)
+Monitorización de CPU, RAM, disco y procesos con alertas por color.
+Incluye alertas automáticas si CPU supera 80% o disco 90%.
+**Uso:** `bash scripts/health-check.sh`
 
-.\DiskReport.ps1
+### rotate_logs.sh (Bash)
+Limpieza automática de logs con más de 7 días de antigüedad.
+Programado con cron para ejecutarse cada noche a medianoche.
 
-Solo discos por encima del 50%:
-
-Get-DiskReport -Threshold 50
-
-Modificar -Threshold para otros resultados
-
-### Requisitos
-
-- Windows 10 o superior
-- PowerShell 5.1 o superior
-
-## Health-Check
-
-Analiza el uso de procesos y el estado de un sistema Ubuntu-Linux
+## Requisitos
+- Windows 10 o superior con PowerShell 5.1
+- Ubuntu en WSL2 para los scripts Bash
