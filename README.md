@@ -20,3 +20,7 @@ Modificar -Threshold para otros resultados
 
 - Windows 10 o superior
 - PowerShell 5.1 o superior
+
+### Health-Check
+
+Analiza el uso de procesos y el estado de un sistema Ubuntu-Linux
