@@ -33,4 +33,19 @@ echo -e "${AMARILLO}PROCESOS${SIN_COLOR}"
 ps aux --sort=-%cpu | head -6 | tail -5
 echo ""
 
+# Alertas
+UMBRAL_CPU=80
+UMBRAL_DISCO=90
+
+cpu_numero=$(echo "$cpu_uso" | awk -F. '{print $1}')
+disco_uso=$(df / | tail -1 | awk '{print $5}' | tr -d '%')
+
+if [ "$cpu_numero" -gt "$UMBRAL_CPU" ]; then
+    echo -e "${ROJO}ALERTA: CPU por encima del $UMBRAL_CPU%${SIN_COLOR}"
+fi
+
+if [ "$disco_uso" -gt "$UMBRAL_DISCO" ]; then
+    echo -e "${ROJO}ALERTA: Disco por encima del $UMBRAL_DISCO%${SIN_COLOR}"
+fi
+
 echo "=== Fin del reporte ==="
