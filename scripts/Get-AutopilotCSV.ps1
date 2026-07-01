@@ -1,4 +1,4 @@
-﻿<#PSScriptInfo
+<#PSScriptInfo
  
 .VERSION 3.5
  
@@ -207,6 +207,25 @@ Process
         # Get the common properties.
         Write-Verbose "Checking $comp"
         $serial = (Get-CimInstance -CimSession $session -Class Win32_BIOS).SerialNumber
+
+        # =========================================================================
+        # NUEVA MODIFICACIÓN: Confirmación manual y validación de número de serie
+        # =========================================================================
+        Write-Host ""
+        Write-Host "--------------------------------------------------------" -ForegroundColor Cyan
+        Write-Host "Validación requerida para el equipo: $comp" -ForegroundColor Cyan
+        $confirmSerial = Read-Host "Por favor, introduce el número de serie de la pegatina/BIOS"
+        
+        if ($confirmSerial.Trim().ToUpper() -ne $serial.Trim().ToUpper()) {
+            Write-Host "[ERROR] El número de serie introducido ($confirmSerial) NO coincide con el del sistema ($serial)." -ForegroundColor Red
+            Write-Host "Saltando el equipo $comp para evitar registros incorrectos." -ForegroundColor Yellow
+            Write-Host "--------------------------------------------------------" -ForegroundColor Cyan
+            Remove-CimSession $session
+            continue
+        }
+        Write-Host "¡Confirmación exitosa! El número de serie coincide." -ForegroundColor Green
+        Write-Host "--------------------------------------------------------" -ForegroundColor Cyan
+        # =========================================================================
 
         # Get the hash (if available)
         $devDetail = (Get-CimInstance -CimSession $session -Namespace root/cimv2/mdm/dmmap -Class MDM_DevDetail_Ext01 -Filter "InstanceID='Ext' AND ParentID='./DevDetail'")
